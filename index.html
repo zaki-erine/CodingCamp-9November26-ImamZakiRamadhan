@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Expense & Budget Visualizer</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <h1 class="app-title">💰 Budget Tracker</h1>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode">
+      <span id="themeIcon">🌙</span>
+    </button>
+  </header>
+
+  <main class="container">
+
+    <!-- Balance Card -->
+    <section class="balance-card" aria-label="Balance summary">
+      <div class="balance-row">
+        <div class="balance-item income">
+          <span class="balance-label">Income</span>
+          <span class="balance-amount" id="totalIncome">+ Rp 0</span>
+        </div>
+        <div class="balance-item expense">
+          <span class="balance-label">Expenses</span>
+          <span class="balance-amount" id="totalExpense">- Rp 0</span>
+        </div>
+      </div>
+      <div class="balance-total">
+        <span class="total-label">Total Balance</span>
+        <span class="total-amount" id="totalBalance">Rp 0</span>
+      </div>
+    </section>
+
+    <!-- Spending Limit Alert -->
+    <div class="limit-alert hidden" id="limitAlert" role="alert">
+      ⚠️ You've exceeded your spending limit of <strong id="limitDisplay"></strong>!
+    </div>
+
+    <!-- Spending Limit Setting -->
+    <section class="limit-section">
+      <label for="spendingLimit" class="limit-label">Monthly Spending Limit:</label>
+      <div class="limit-input-row">
+        <input type="number" id="spendingLimit" class="input-field" placeholder="e.g. 500000" min="0" />
+        <button class="btn btn-secondary" id="setLimitBtn">Set</button>
+      </div>
+    </section>
+
+    <!-- Add Transaction Form -->
+    <section class="form-section">
+      <h2 class="section-title">Add Transaction</h2>
+      <form id="transactionForm" novalidate>
+        <div class="form-group">
+          <label for="txDescription">Description</label>
+          <input type="text" id="txDescription" class="input-field" placeholder="e.g. Lunch, Salary..." required />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="txAmount">Amount (Rp)</label>
+            <input type="number" id="txAmount" class="input-field" placeholder="e.g. 50000" min="1" required />
+          </div>
+          <div class="form-group">
+            <label for="txType">Type</label>
+            <select id="txType" class="input-field">
+              <option value="expense">Expense</option>
+              <option value="income">Income</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="txCategory">Category</label>
+          <select id="txCategory" class="input-field">
+            <option value="Food">🍔 Food</option>
+            <option value="Transport">🚗 Transport</option>
+            <option value="Shopping">🛍️ Shopping</option>
+            <option value="Health">💊 Health</option>
+            <option value="Entertainment">🎮 Entertainment</option>
+            <option value="Bills">📄 Bills</option>
+            <option value="Salary">💼 Salary</option>
+            <option value="Other">📦 Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="txDate">Date</label>
+          <input type="date" id="txDate" class="input-field" required />
+        </div>
+        <p class="form-error hidden" id="formError">Please fill in all required fields.</p>
+        <button type="submit" class="btn btn-primary btn-full">+ Add Transaction</button>
+      </form>
+    </section>
+
+    <!-- Chart Section -->
+    <section class="chart-section">
+      <h2 class="section-title">Spending by Category</h2>
+      <div class="chart-container" id="chartContainer">
+        <p class="empty-state" id="chartEmpty">No expense data yet.</p>
+        <canvas id="spendingChart" width="300" height="300" aria-label="Spending chart by category" role="img"></canvas>
+      </div>
+      <div class="chart-legend" id="chartLegend"></div>
+    </section>
+
+    <!-- Transaction History -->
+    <section class="history-section">
+      <div class="history-header">
+        <h2 class="section-title">Transactions</h2>
+        <div class="sort-controls">
+          <label for="sortBy" class="sort-label">Sort:</label>
+          <select id="sortBy" class="input-field input-field--small">
+            <option value="date-desc">Newest</option>
+            <option value="date-asc">Oldest</option>
+            <option value="amount-desc">Amount ↓</option>
+            <option value="amount-asc">Amount ↑</option>
+            <option value="category">Category</option>
+          </select>
+        </div>
+      </div>
+      <ul class="transaction-list" id="transactionList" aria-label="Transaction history">
+        <li class="empty-state" id="listEmpty">No transactions yet. Add one above!</li>
+      </ul>
+    </section>
+
+  </main>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
